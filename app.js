@@ -1,11 +1,17 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
-
+const path = require('path');
 const port = process.env.PORT || 4001;
-const index = require('./routes/index');
-
+const index = express.Router();
 const app = express();
+
+index.use(express.static(path.join(__dirname, 'client/build')));
+
+index.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+
 app.use(index);
 
 const server = http.createServer(app);
@@ -38,8 +44,6 @@ io.on('connection', (socket) => {
         console.log('Someone disconnected');
     });
 });
-
-
 
 server.listen(port, () => {
     console.log(`Listening on port ${port}`);
