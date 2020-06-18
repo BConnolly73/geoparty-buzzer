@@ -2,13 +2,14 @@
   "name": "geoparty",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
-  "author": "",
+  "author": "Bradley Connolly",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
