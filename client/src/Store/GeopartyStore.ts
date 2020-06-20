@@ -6,20 +6,20 @@ import { Participant } from './../Types/participant';
 
 class GeopartyStore {
     @observable buzzInEnabled: boolean = true;
-    @observable participants: Array<Participant> = [];
+    @observable firstBuzzer: Participant | undefined = undefined;
 
     @action
-    emitBuzzIn = () => {
-        Socket.emit('clickedBuzz', {});
+    emitBuzzIn = (participant: Participant): void => {
+        Socket.emit('userBuzzedIn', participant);
     }
 
     @action
-    emitUnlockButton = () => {
+    emitUnlockButton = (): void => {
         Socket.emit('clickedUnlockButton', {});
     }
 
     @action
-    setBuzzInEnabled = (enabled: boolean) => {
+    setBuzzInEnabled = (enabled: boolean): void => {
         this.buzzInEnabled = enabled;
     }
 
@@ -29,9 +29,9 @@ class GeopartyStore {
     }
 
     @action
-    addParticipant = ((participant: Participant) => {
-        this.participants.push(participant);
-    });
+    setFirstBuzzer = (data: Participant | undefined): void => {
+        this.firstBuzzer = data;
+    }
 };
 
 const Store = new GeopartyStore();
