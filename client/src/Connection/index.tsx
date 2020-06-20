@@ -3,7 +3,12 @@ import io from 'socket.io-client';
 import { Store } from './../Store/GeopartyStore';
 import { Participant } from './../Types/participant';
 
-const socket = io('http://localhost:4001');
+console.log(process.env.NODE_ENV);
+const socket = io(
+    process.env.NODE_ENV === 'production' ?
+    'https://calm-fjord-53303.herokuapp.com/' :
+    'http://localhost:4001'
+);
 
 socket.on('acceptBuzzIn', (data: Participant) => {
     Store.setBuzzInEnabled(false);

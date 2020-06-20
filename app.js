@@ -35,12 +35,3 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
-
-const attemptToConnect = (socket, username, gameCode,) => {
-    //socket.join(gameCode);
-    socket.emit('attemptConnection', {username, gameCode});
-}
-
-const createGame = (socket, data) => {
-    socket.emit('clientCreateGame', data);
-}
