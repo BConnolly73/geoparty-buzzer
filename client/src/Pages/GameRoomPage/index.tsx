@@ -28,9 +28,22 @@ const GameRoomPage = observer(() => {
         }
     }, []);
 
+    const onBuzzButtonClick = () => {
+        if (username.trim() === '') {
+            window.alert('No username. Cannot buzz in.');
+            return;
+        }
+
+        const particpant: Participant = {
+            name: username
+        };
+
+        GeopartyStore.emitBuzzIn(particpant);
+    }
+
     return (
         <Container>
-            {<h1>Welcome to Game</h1>}
+            <h1>Welcome to Geoparty</h1>
 
             <Form>
                 <Form.Group controlId="username">
@@ -46,24 +59,49 @@ const GameRoomPage = observer(() => {
                     </Form.Text>
                 </Form.Group>
             </Form>
+            <Container
+                style={{
+                    display: 'flex',
+                }}
+            >
 
-            <Button
+<           Button
                 disabled={!GeopartyStore.isBuzzInEnabled}
-                onClick={() => {
-                    const particpant: Participant = {
-                        name: username
-                    };
-
-                    GeopartyStore.emitBuzzIn(particpant);
+                onClick={onBuzzButtonClick}
+                style={{
+                    borderRadius: '50%',
+                    height: '6em',
+                    width: '6em',
+                    fontSize: '2em',
+                    color: 'white',
+                    backgroundColor: 'red',
+                    borderColor: 'red',
+                    margin: 'auto',
+                    boxShadow: '0.2em -0.2em #404040'
                 }}
             >
                 BUZZ
             </Button>
 
-            {isAdmin && ( <AdminControls /> )}
+            </Container>
 
-            <div>Buzz in Winner:</div>
-            <div>{typeof GeopartyStore.firstBuzzer !== 'undefined' ? GeopartyStore.firstBuzzer.name : ''}</div>
+            <Container
+                style={{
+                    display: 'flex',
+                    paddingTop: '1.5em'
+                }}
+            >
+                {isAdmin && ( <AdminControls style={{margin: 'auto'}}/> )}
+            </Container>
+
+            <Container style={{
+                    display: 'flex',
+                    paddingTop: '1.5em'
+            }}>
+                <div>Buzz in Winner:</div>
+                <div>{typeof GeopartyStore.firstBuzzer !== 'undefined' ? GeopartyStore.firstBuzzer.name : ''}</div>
+            </Container>
+
         </Container>
     )
 });

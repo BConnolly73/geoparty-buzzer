@@ -3,12 +3,19 @@ import { observer } from 'mobx-react';
 import GeopartyStoreContext from './../../../../Store/GeopartyStore';
 import { Button } from 'react-bootstrap';
 
-const AdminControls = observer(() => {
+type Props = {
+    style: object
+};
+
+const AdminControls = observer((props: Props) => {
     const GeopartyStore = useContext(GeopartyStoreContext);
 
     return (
-        <Button onClick={() => GeopartyStore.emitUnlockButton()}>Unlock</Button>
-    )
+        <Button
+            onClick={() => GeopartyStore.emitUnlockButton()}
+            style={props.style || {}}
+        >Unlock</Button>
+    );
 });
 
 export { AdminControls as default};
