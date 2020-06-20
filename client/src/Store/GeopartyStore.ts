@@ -29,8 +29,10 @@ class GeopartyStore {
     }
 
     @action
-    setFirstBuzzer = (data: Participant | undefined): void => {
-        this.firstBuzzer = data;
+    setFirstBuzzer = (data: Participant | undefined, allowOverwrite: boolean = false): void => {
+        if (this.firstBuzzer === undefined || allowOverwrite) {
+            this.firstBuzzer = data;
+        }
     }
 };
 
