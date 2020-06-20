@@ -9,7 +9,7 @@ import { Participant } from "../../Types/participant";
 const GameRoomPage = observer(() => {
     const GeopartyStore = useContext(GeopartyStoreContext);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
-    const [username, setUsername] = useState<string>('');
+    const [username, setUsername] = useState<string>(process.env.NODE_ENV === 'production' ? localStorage.getItem('geoparty-username') || '' : '');
 
     const getUrlParameter = (param: string) => {
         const search = window.location.search.substring(1);
@@ -17,12 +17,12 @@ const GameRoomPage = observer(() => {
         try {
             parameters = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
         } finally {
-            return parameters[param];
+            return typeof parameters !== 'undefined' ? parameters[param] : undefined;
         }
     }
 
     useEffect(() => {
-        const isAdminParam = getUrlParameter('isAdmin');
+        const isAdminParam = getUrlParameter('isAdmin') || false;
         if (isAdminParam === '1') {
             setIsAdmin(() => true);
         }
@@ -52,7 +52,10 @@ const GameRoomPage = observer(() => {
                         type="text"
                         placeholder="Enter username"
                         value={username}
-                        onChange={(e) => {setUsername(e.target.value)}}
+                        onChange={(e) => {
+                            localStorage.setItem('geoparty-username', e.target.value);
+                            setUsername(e.target.value)
+                        }}
                     />
                     <Form.Text className="text-muted">
                         {username === '' && "*Required"}
