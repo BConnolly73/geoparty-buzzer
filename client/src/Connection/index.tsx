@@ -15,9 +15,9 @@ socket.on('acceptBuzzIn', (data: Participant) => {
     Store.setFirstBuzzer(data);
 });
 
-socket.on('unlockButton', (data: any) => {
+socket.on('unlockButton', () => {
     Store.setBuzzInEnabled(true);
-    Store.setFirstBuzzer(undefined);
+    Store.setFirstBuzzer(undefined, true);
 });
 
 export { socket as default };
