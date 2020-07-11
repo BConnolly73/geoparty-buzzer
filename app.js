@@ -10,7 +10,7 @@ const app = express();
 index.use(express.static(path.join(__dirname, 'client/build')));
 
 index.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
 app.use(index);

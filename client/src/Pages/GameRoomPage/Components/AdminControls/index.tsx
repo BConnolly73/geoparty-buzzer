@@ -4,7 +4,7 @@ import GeopartyStoreContext from './../../../../Store/GeopartyStore';
 import { Button } from 'react-bootstrap';
 
 type Props = {
-    style: object
+    className: string
 };
 
 const AdminControls = observer((props: Props) => {
@@ -13,7 +13,7 @@ const AdminControls = observer((props: Props) => {
     return (
         <Button
             onClick={() => GeopartyStore.emitUnlockButton()}
-            style={props.style || {}}
+            className={props.className || ""}
         >Unlock</Button>
     );
 });

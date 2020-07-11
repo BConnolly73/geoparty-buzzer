@@ -1,5 +1,5 @@
 {
-  "name": "Geoparty",
+  "name": "geoparty-buzzer-client",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:4001",
@@ -15,7 +15,6 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/socket.io-client": "^1.4.33",
     "bootstrap": "^4.5.0",
-    "firebase": "^7.15.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "react": "^16.13.1",

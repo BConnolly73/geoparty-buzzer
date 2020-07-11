@@ -10,11 +10,14 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         {Pages.map((page, key) => {
+          const { exact, path, component, props } = page;
+
           return <Route
             key={key}
-            exact={page.exact}
-            path={page.path}
-            component={page.component}
+            exact={exact}
+            path={path}
+            Component={component}
+            pageProps={props}
           />
         })}
       </Switch>

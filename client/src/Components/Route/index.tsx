@@ -2,12 +2,29 @@ import React from 'react';
 import { Route as RouterRoute } from 'react-router-dom';
 import Header from './../Header';
 
-const Route = (props: any) => {
+type Props = {
+    exact: boolean,
+    path: string,
+    Component: any,
+    pageProps?: any
+};
+
+const Route = (props: Props) => {
+    const { exact, path, Component, pageProps } = props;
+
+    const ComponentToRender = (pageProps: any) => (
+        <Component
+            {...pageProps}
+        />
+    );
+
     return (
         <>
             <Header />
             <RouterRoute
-                {...props}
+                exact={exact}
+                path={path}
+                component={() => ComponentToRender(pageProps)}
             />
         </>
     )
