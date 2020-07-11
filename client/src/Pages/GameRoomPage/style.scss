@@ -1,0 +1,35 @@
+.display-flex {
+    display: flex;
+}
+
+.auto-margin {
+    margin: auto;
+}
+
+.buzzer-container {
+    display: flex;
+    padding-top: 1.5em;
+}
+
+.buzz-button {
+    border-radius: 50%;
+    height: 6em;
+    width: 6em;
+    font-size: 2em;
+    color: white;
+    background-color: red;
+    border-color: red;
+    margin: auto;
+    box-shadow: 0.2em -0.2em #404040;
+
+    &:hover {
+        background-color: red;
+        border-color: red;
+    }
+
+    &:disabled {
+        background-color:black;
+        border-color: black;
+        color: white;
+    }
+}
