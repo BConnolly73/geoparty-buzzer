@@ -5,8 +5,8 @@ import Header from './../Header';
 type Props = {
     exact: boolean,
     path: string,
-    Component: any,
-    pageProps?: any
+    Component: React.FunctionComponent,
+    pageProps?: object
 };
 
 const Route = (props: Props) => {

@@ -12,16 +12,6 @@ const GameRoomPage = observer((props: any) => {
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [username, setUsername] = useState<string>(process.env.NODE_ENV === 'production' ? localStorage.getItem('geoparty-username') || '' : '');
 
-    const getUrlParameter = (param: string) => {
-        const search = window.location.search.substring(1);
-        let parameters;
-        try {
-            parameters = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-        } finally {
-            return typeof parameters !== 'undefined' ? parameters[param] : undefined;
-        }
-    }
-
     useEffect(() => {
         setIsAdmin(props.isAdmin || false);
     }, [props]);

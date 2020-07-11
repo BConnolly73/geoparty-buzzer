@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Pages from './Pages';
 import Route from './Components/Route';
 

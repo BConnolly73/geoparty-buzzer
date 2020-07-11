@@ -3,7 +3,6 @@ import io from 'socket.io-client';
 import { Store } from './../Store/GeopartyStore';
 import { Participant } from './../Types/participant';
 
-console.log(process.env.NODE_ENV);
 const socket = io(
     process.env.NODE_ENV === 'production' ?
     'https://geoparty-trivia.herokuapp.com/' :
