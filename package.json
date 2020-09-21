@@ -2,18 +2,30 @@
   "name": "geoparty-buzzer",
   "version": "1.0.0",
   "description": "Jeopardy style buzz in",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "prestart": "npm run build",
+    "start": "node .",
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "test": "echo \"Error: TBA\" && exit 1"
   },
   "keywords": [],
   "author": "Bradley Connolly",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^26.0.14",
+    "@types/socket.io": "^2.1.11",
     "express": "^4.17.1",
     "node-sass": "^4.14.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.8",
+    "@types/node": "^14.11.1",
+    "tslint": "^6.1.3"
   }
 }

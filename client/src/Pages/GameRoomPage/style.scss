@@ -33,3 +33,20 @@
         color: white;
     }
 }
+
+.buzz-button-disabled {
+    border-radius: 50%;
+    height: 6em;
+    width: 6em;
+    font-size: 2em;
+    color: white;
+    background-color: black;
+    border-color: black;
+    margin: auto;
+    box-shadow: 0.2em -0.2em #404040;
+
+    &:hover {
+        background-color: black;
+        border-color: black;
+    }
+}

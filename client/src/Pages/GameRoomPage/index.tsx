@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { observer } from 'mobx-react';
 import GeopartyStoreContext from './../../Store/GeopartyStore';
 
-import { Container, Button, Form } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 import AdminControls from './Components/AdminControls';
-import { Participant } from "../../Types/participant";
+import GameButton from './Components/Button';
+
 import './style.scss';
 
 const GameRoomPage = observer((props: any) => {
@@ -15,19 +16,6 @@ const GameRoomPage = observer((props: any) => {
     useEffect(() => {
         setIsAdmin(props.isAdmin || false);
     }, [props]);
-
-    const sendBuzzIn = () => {
-        if (username.trim() === '') {
-            window.alert('No username. Cannot buzz in.');
-            return;
-        }
-
-        const particpant: Participant = {
-            name: username
-        };
-
-        GeopartyStore.emitBuzzIn(particpant);
-    }
 
     return (
         <Container>
@@ -49,16 +37,9 @@ const GameRoomPage = observer((props: any) => {
                 </Form.Group>
             </Form>
 
-            <Container
-                className="display-flex"
-            >
-                <Button
-                    disabled={!GeopartyStore.isBuzzInEnabled}
-                    className="buzz-button"
-                    onClick={sendBuzzIn}
-                > BUZZ
-                </Button>
-            </Container>
+            <GameButton
+                username={username}
+            />
 
             <Container
                 style={{

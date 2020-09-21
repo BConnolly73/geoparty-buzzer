@@ -12,7 +12,7 @@ type Props = {
 const Route = (props: Props) => {
     const { exact, path, Component, pageProps } = props;
 
-    const ComponentToRender = (pageProps: any) => (
+    const ComponentToRender = (_: any) => (
         <Component
             {...pageProps}
         />
