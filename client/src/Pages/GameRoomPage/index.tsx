@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { observer } from 'mobx-react';
 import GeopartyStoreContext from './../../Store/GeopartyStore';
 
-import { Container, Button, Form } from 'react-bootstrap';
+import { Container, Button, Form, ProgressBar } from 'react-bootstrap';
 import AdminControls from './Components/AdminControls';
 import { Participant } from "../../Types/participant";
 import './style.scss';
@@ -17,8 +17,14 @@ const GameRoomPage = observer((props: any) => {
     }, [props]);
 
     const sendBuzzIn = () => {
+        console.log('Click registered');
         if (username.trim() === '') {
             window.alert('No username. Cannot buzz in.');
+            return;
+        }
+
+        if (!GeopartyStore.isBuzzInEnabled) {
+            GeopartyStore.triggerEarlyPressPenalty(5);
             return;
         }
 
@@ -49,13 +55,20 @@ const GameRoomPage = observer((props: any) => {
                 </Form.Group>
             </Form>
 
+            <Container className="early-click-message-container">
+                <div>{GeopartyStore.earlyPressMessage}</div>
+                {
+                    // GeopartyStore.earlyPressPenalty && <ProgressBar variant="danger" now={1 / 5 * 100}/>
+                }
+            </Container>
+
             <Container
-                className="display-flex"
+                className="buzz-button-container"
+                onClick={sendBuzzIn}
             >
                 <Button
-                    disabled={!GeopartyStore.isBuzzInEnabled}
+                    disabled={!GeopartyStore.isBuzzInEnabled && !GeopartyStore.earlyPressPenalty}
                     className="buzz-button"
-                    onClick={sendBuzzIn}
                 > BUZZ
                 </Button>
             </Container>

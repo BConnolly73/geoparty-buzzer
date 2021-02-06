@@ -8,6 +8,9 @@ class GeopartyStore {
     @observable buzzInEnabled: boolean = true;
     @observable firstBuzzer: Participant | undefined = undefined;
 
+    @observable earlyPressPenalty: boolean = false;
+    @observable earlyPressMessage: string = '';
+
     @action
     emitBuzzIn = (participant: Participant): void => {
         Socket.emit('userBuzzedIn', participant);
@@ -33,6 +36,18 @@ class GeopartyStore {
         if (this.firstBuzzer === undefined || allowOverwrite) {
             this.firstBuzzer = data;
         }
+    }
+
+    @action
+    triggerEarlyPressPenalty = (seconds: number) => {
+        console.log('Early press triggered');
+        this.earlyPressPenalty = true;
+        this.earlyPressMessage = `Pressed too early. ${seconds} second${seconds !== 1 ? 's' : ''} penalty`;
+        setTimeout(() => {
+            this.earlyPressPenalty = false;
+            this.earlyPressMessage = '';
+            console.log('Releasing early press penalty');
+        }, seconds * 1000);
     }
 };
 

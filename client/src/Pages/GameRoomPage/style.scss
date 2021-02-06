@@ -1,9 +1,10 @@
-.display-flex {
-    display: flex;
-}
-
 .auto-margin {
     margin: auto;
+}
+
+.early-click-message-container {
+    margin-top: 1em;
+    margin-bottom: 2em;
 }
 
 .buzzer-container {
@@ -11,16 +12,23 @@
     padding-top: 1.5em;
 }
 
-.buzz-button {
+.buzz-button-container {
+    display: flex;
     border-radius: 50%;
-    height: 6em;
-    width: 6em;
+    height: 10em;
+    width: 12em;
+    border-color: red;
+}
+
+.buzz-button {
+    width: 100%;
+    height: 100%;
     font-size: 2em;
     color: white;
     background-color: red;
-    border-color: red;
+    border-radius: 50%;
     margin: auto;
-    box-shadow: 0.2em -0.2em #404040;
+    box-shadow: 0.1em -0.1em #404040;
 
     &:hover {
         background-color: red;
