@@ -12,9 +12,23 @@ const GameRoomPage = observer((props: any) => {
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [username, setUsername] = useState<string>(process.env.NODE_ENV === 'production' ? localStorage.getItem('geoparty-username') || '' : '');
 
+    // TODO: Replace me
+    const getUrlParameter = (param: string) => {
+        const search = window.location.search.substring(1);
+        let parameters;
+        try {
+            parameters = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+        } finally {
+            return typeof parameters !== 'undefined' ? parameters[param] : undefined;
+        }
+    }
+
     useEffect(() => {
-        setIsAdmin(props.isAdmin || false);
-    }, [props]);
+        const isAdminParam = getUrlParameter('isAdmin') || false;
+        if (isAdminParam === '1') {
+            setIsAdmin(() => true);
+        }
+    }, []);
 
     const sendBuzzIn = () => {
         console.log('Click registered');
@@ -23,7 +37,7 @@ const GameRoomPage = observer((props: any) => {
             return;
         }
 
-        if (!GeopartyStore.isBuzzInEnabled) {
+        if (!GeopartyStore.isBuzzInEnabled || GeopartyStore.earlyPressPenalty) {
             GeopartyStore.triggerEarlyPressPenalty(5);
             return;
         }
@@ -58,18 +72,26 @@ const GameRoomPage = observer((props: any) => {
             <Container className="early-click-message-container">
                 <div>{GeopartyStore.earlyPressMessage}</div>
                 {
-                    // GeopartyStore.earlyPressPenalty && <ProgressBar variant="danger" now={1 / 5 * 100}/>
+                    GeopartyStore.earlyPressPenalty && <ProgressBar variant="danger" now={(GeopartyStore.earlyPressCurrentDuration / 5000) * 100}/>
                 }
             </Container>
 
-            <Container
-                className="buzz-button-container"
-                onClick={sendBuzzIn}
-            >
+            <Container className="display-flex">
                 <Button
-                    disabled={!GeopartyStore.isBuzzInEnabled && !GeopartyStore.earlyPressPenalty}
+                    disabled={!GeopartyStore.isBuzzInEnabled || GeopartyStore.earlyPressPenalty}
                     className="buzz-button"
-                > BUZZ
+                    onClick={(e: any) => {
+                        console.log('Button', e);
+                    }}
+                >
+                    <Container
+                        className="inner-buzz-button"
+                        onClick={(e: any) => {
+                            console.log('Child Container', e);
+                            sendBuzzIn();
+                        }}
+                    >
+                    </Container>
                 </Button>
             </Container>
 

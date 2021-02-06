@@ -10,6 +10,8 @@ class GeopartyStore {
 
     @observable earlyPressPenalty: boolean = false;
     @observable earlyPressMessage: string = '';
+    @observable earlyPressCurrentDuration: number = 0;
+    @observable earlyPressInterval: any = null;
 
     @action
     emitBuzzIn = (participant: Participant): void => {
@@ -43,9 +45,20 @@ class GeopartyStore {
         console.log('Early press triggered');
         this.earlyPressPenalty = true;
         this.earlyPressMessage = `Pressed too early. ${seconds} second${seconds !== 1 ? 's' : ''} penalty`;
+        this.earlyPressCurrentDuration = 0;
+
+        this.earlyPressInterval = setInterval(() => {
+            this.earlyPressCurrentDuration += 56;
+            if (seconds * 1000 <= this.earlyPressCurrentDuration) {
+                clearInterval(this.earlyPressInterval);
+            }
+        }, 50);
+
         setTimeout(() => {
             this.earlyPressPenalty = false;
             this.earlyPressMessage = '';
+            this.earlyPressCurrentDuration = 0;
+
             console.log('Releasing early press penalty');
         }, seconds * 1000);
     }
