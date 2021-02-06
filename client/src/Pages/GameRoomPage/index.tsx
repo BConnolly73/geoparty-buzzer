@@ -31,7 +31,6 @@ const GameRoomPage = observer((props: any) => {
     }, []);
 
     const sendBuzzIn = () => {
-        console.log('Click registered');
         if (username.trim() === '') {
             window.alert('No username. Cannot buzz in.');
             return;
@@ -80,14 +79,11 @@ const GameRoomPage = observer((props: any) => {
                 <Button
                     disabled={!GeopartyStore.isBuzzInEnabled || GeopartyStore.earlyPressPenalty}
                     className="buzz-button"
-                    onClick={(e: any) => {
-                        console.log('Button', e);
-                    }}
+                    onClick={() => {}}
                 >
                     <Container
                         className="inner-buzz-button"
-                        onClick={(e: any) => {
-                            console.log('Child Container', e);
+                        onClick={() => {
                             sendBuzzIn();
                         }}
                     >

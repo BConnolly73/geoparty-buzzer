@@ -45,21 +45,28 @@ class GeopartyStore {
         console.log('Early press triggered');
         this.earlyPressPenalty = true;
         this.earlyPressMessage = `Pressed too early. ${seconds} second${seconds !== 1 ? 's' : ''} penalty`;
-        this.earlyPressCurrentDuration = 0;
 
-        this.earlyPressInterval = setInterval(() => {
-            this.earlyPressCurrentDuration += 56;
-            if (seconds * 1000 <= this.earlyPressCurrentDuration) {
-                clearInterval(this.earlyPressInterval);
-            }
-        }, 50);
+        if (this.earlyPressInterval === null) {
+            console.log('Setting interval');
+            this.earlyPressCurrentDuration = 0;
+            this.earlyPressInterval = setInterval(() => {
+                console.log('Interval tick!');
+                this.earlyPressCurrentDuration += 50;
+
+                if (seconds * 1000 <= this.earlyPressCurrentDuration) {
+                    clearInterval(this.earlyPressInterval);
+                    this.earlyPressCurrentDuration = 0;
+                    this.earlyPressInterval = null;
+                    return null;
+                }
+            }, 50);
+        } else {
+            console.log('Not setting interval');
+        }
 
         setTimeout(() => {
             this.earlyPressPenalty = false;
             this.earlyPressMessage = '';
-            this.earlyPressCurrentDuration = 0;
-
-            console.log('Releasing early press penalty');
         }, seconds * 1000);
     }
 };
